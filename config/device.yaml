@@ -1,0 +1,20 @@
+# IRAI Device Configuration
+
+audio:
+  input_device: default
+  output_device: default
+  sample_rate: 16000
+  channels: 1
+
+wake_word:
+  enabled: true
+  phrase: "hey irai"
+
+knowledge:
+  wiki_snapshot: knowledge/wiki_top10k.db
+  user_docs: knowledge/user_docs/
+  calendar: knowledge/calendar.json
+
+cache:
+  weather_max_age_hours: 24
+  sports_max_age_hours: 168

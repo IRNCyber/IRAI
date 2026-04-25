@@ -1,0 +1,21 @@
+# IRAI Model Configuration
+
+stt:
+  engine: whisper
+  model: base.en          # Options: tiny, base, small, medium
+  language: en
+  device: cpu             # cpu or cuda
+
+llm:
+  engine: llama.cpp
+  model: null             # Path to GGUF model file
+  quantization: Q4_K_M
+  max_tokens: 150
+  context_length: 2048
+  device: cpu
+
+tts:
+  engine: piper
+  voice: en_US-lessac-medium
+  sample_rate: 22050
+  device: cpu

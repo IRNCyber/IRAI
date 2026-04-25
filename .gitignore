@@ -1,0 +1,28 @@
+# Models (large binary files)
+*.gguf
+*.bin
+*.pt
+*.onnx
+
+# Knowledge DB
+*.db
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
