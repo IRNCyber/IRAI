@@ -41,14 +41,21 @@ class IraiAssistant:
         self._fallback_wake = SimpleWakeWordDetector(config.wake_word.phrase)
         self._running = False
 
-    def load_models(self) -> None:
-        """Load all ML models into memory."""
+    def load_models(self, text_only: bool = False) -> None:
+        """Load all ML models into memory.
+
+        Args:
+            text_only: If True, skip audio-related models (STT, TTS, wake word).
+        """
         logger.info("Loading IRAI models...")
-        self._stt.load()
+        if not text_only:
+            self._stt.load()
         self._llm.load()
-        self._tts.load()
+        if not text_only:
+            self._tts.load()
         self._knowledge.load()
-        self._wake_detector.load()
+        if not text_only:
+            self._wake_detector.load()
         logger.info("All models loaded. IRAI is ready.")
 
     def _record_audio(self, duration: float = 5.0) -> np.ndarray:
@@ -214,7 +221,7 @@ def main() -> None:
     config = load_config(models_path=models_path, device_path=device_path)
 
     assistant = IraiAssistant(config)
-    assistant.load_models()
+    assistant.load_models(text_only=bool(args.text))
 
     if args.text:
         response = assistant.process_text(args.text)
