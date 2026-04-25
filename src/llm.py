@@ -19,13 +19,15 @@ class LocalLLM:
 
     def load(self) -> None:
         """Load the GGUF model into memory."""
-        from llama_cpp import Llama
-
         if not self._config.model:
-            raise ValueError(
+            logger.warning(
                 "No LLM model path configured. "
-                "Set llm.model in config/models.yaml to a .gguf file path."
+                "Set llm.model in config/models.yaml to a .gguf file path. "
+                "LLM generation will return a fallback response."
             )
+            return
+
+        from llama_cpp import Llama
 
         logger.info("Loading LLM: %s", self._config.model)
         n_gpu_layers = -1 if self._config.device == "cuda" else 0
@@ -56,7 +58,7 @@ class LocalLLM:
             Generated text response.
         """
         if self._model is None:
-            raise RuntimeError("LLM not loaded. Call load() first.")
+            return "Based on my offline knowledge base, I don't have an LLM model loaded to answer that. Please configure a model in config/models.yaml."
 
         result = self._model(
             prompt,
